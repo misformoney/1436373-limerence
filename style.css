@@ -447,14 +447,14 @@ button:hover {
 
 #monitor2 .welcome {
     position: relative;
-    top: 20px;
+    top: 5px;
     font-size: 2vw;
     line-height: 140%;
 }
 
 #monitor3 .welcome {
     position: relative;
-    top: 20px;
+    top: 5px;
     font-size: 2vw;
     line-height: 100%;
 }
