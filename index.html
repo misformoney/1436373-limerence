@@ -12,9 +12,9 @@
 
 <body>
 
-    <audio id="click-sound" src="Mouse.mp3" preload="auto"></audio>
-    <audio id="background-music" src="Jiminell - City pop.mp3" preload="auto" autoplay loop></audio>
-
+     <!-- Mute both audio elements initially -->
+     <audio id="click-sound" src="Mouse.mp3" preload="auto" muted></audio>
+     <audio id="background-music" src="Jiminell - City pop.mp3" preload="auto" autoplay loop muted></audio> 
 
 
     <div id="cover-screen">
@@ -29,9 +29,9 @@
     <div id="header-container">
 
         <div id="sound-toggle" onclick="toggleSound()">
-            <!-- Unmute SVG (Initially displayed) -->
+            <!-- Unmute SVG (Initially non-displayed) -->
             <svg id="sound-on" xmlns="http://www.w3.org/2000/svg" width="20" height="22" viewBox="0 0 20 22"
-                fill="none">
+                fill="none" style="display: none;">
                 <path d="M2.84672 6.05839L11.5328 0V21.5328L2.84672 15.4745H0V6.05839H2.84672Z" fill="#E6636F" />
                 <path
                     d="M13.8686 3.64964V17.7994C15.9619 17.9881 20 15.7086 20 11.0675C20 5.63393 16.0143 3.80057 13.8686 3.64964Z"
@@ -42,7 +42,7 @@
 
             <!-- Muted SVG (Initially hidden) -->
             <svg id="sound-off" xmlns="http://www.w3.org/2000/svg" width="28" height="22" viewBox="0 0 28 22"
-                fill="none" style="display: none;">
+                fill="none">
                 <path d="M5.40831 5.98511L13.9894 0V21.2724L5.40831 15.2873H2.59603V5.98511H5.40831Z" fill="#E7636F" />
                 <path
                     d="M16.2969 3.60549V17.5841C18.3649 17.7705 22.3541 15.5186 22.3541 10.9336C22.3541 5.56578 18.4166 3.75459 16.2969 3.60549Z"
@@ -153,7 +153,7 @@
 
 
         //SOUND ON-OFF 
-        var soundEnabled = true;
+        var soundEnabled = false; // Initially sound is disabled (muted)
 
         // Function to toggle sound and switch icons
         function toggleSound() {
@@ -163,11 +163,12 @@
             var soundOffIcon = document.getElementById('sound-off');
 
             soundEnabled = !soundEnabled;
-            sound.muted = !soundEnabled; // Mute or unmute the sound effect
+            sound.muted = !soundEnabled; // Mute or unmute the click sound
             music.muted = !soundEnabled; // Mute or unmute the background music
 
-            // Toggle between sound on/off icons
             if (soundEnabled) {
+                sound.play(); // Ensure the sound plays when unmuted
+                music.play(); // Ensure background music plays when unmuted
                 soundOnIcon.style.display = 'inline';
                 soundOffIcon.style.display = 'none';
             } else {
@@ -175,7 +176,6 @@
                 soundOffIcon.style.display = 'inline';
             }
         }
-
 
         //--------------------cover-screen loading
 
