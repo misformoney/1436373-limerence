@@ -216,7 +216,7 @@ function displayGridPattern() {
     charWidth = textWidth('W'); // Adjust based on smaller font-size
   } else {
     textSize(120); // Larger text size for desktop
-    gapY = 100; // Larger gap for desktop
+    gapY = 80; // Larger gap for desktop
     charWidth = textWidth('W'); // Adjust based on larger font-size
   }
 
