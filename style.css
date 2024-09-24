@@ -1,0 +1,949 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+    overflow: hidden;
+    transition: filter 1s ease;
+    font-family: 'VT323', monospace;
+}
+
+/* inverted */ 
+
+/* Ensure the monitor stays un-inverted but allow it to rotate */
+.inverted #monitor1, #monitor2, #monitor3, #monitor4, #sound-on, #sound-off, #invertheart-video, #sound-toggle, #invertheart {
+    transition: transform 0.5s ease;
+    /* Do not apply any inversion filter here to retain original colors */
+    filter: none;
+}
+
+
+.inverted #header-container {
+    background: linear-gradient(180deg, rgba(229, 229, 229, 1), rgba(229, 229, 229, 0));
+    color: rgba(17, 20, 23, 1);
+}
+
+.inverted #title {
+    filter: invert(1);
+}
+
+.inverted #canvas-container, #scene {
+    filter: invert(1);
+}
+
+.inverted canvas {
+    filter: invert(1);
+}
+
+/* Invert hover effect when in inverted mode */
+.inverted button:hover {
+    background-color: rgba(17, 20, 23, 0.5); /* Dark background on hover */
+    color: #E5E5E5; /* Light text color on hover */
+}
+
+.inverted button {
+    background-color:  rgba(229, 229, 229, 0.5);
+    color: rgba(17, 20, 23, 1); /* Light text color on hover */
+}
+
+/* When monitor rotates */
+.rotate-monitor {
+    transform: rotate(180deg);
+}
+
+
+/* COVER SCREEN */ 
+
+#cover-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000; /* You can change the color if needed */
+    z-index: 1000; /* High z-index to cover everything */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+#loading-video {
+    width: 60%; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Ensures video covers the area of the element */
+    z-index: 1;
+}
+
+#video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('Texture\ RGB.png') repeat; /* Set your texture image here */
+    opacity: 1; /* Adjust opacity to your liking */
+    z-index: 3;
+    mix-blend-mode: overlay ;
+}
+
+/* HEADER */ 
+
+
+#header-container {
+    position: fixed;
+    width: 100%;
+    height: 70px;
+    overflow: visible;
+    top: 0;
+    background: linear-gradient(180deg, rgba(17, 20, 23, 1), rgba(17, 20, 23, 0));
+    z-index: 200;
+    opacity: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#title {
+    width: 12vw;
+    height: auto;
+    object-fit: cover; /* This will cover the entire area of the container */
+    z-index: 3; 
+    overflow: hidden;
+    margin-left: 3vw;
+    cursor: pointer;
+    opacity: 1;
+}
+
+#invertheart {
+    width: 6.5vw;
+    height: auto;
+    object-fit: cover; /* This will cover the entire area of the container */
+    z-index: 3; 
+    margin-right: 11vw;
+    cursor: pointer;
+}
+
+#sound-toggle {
+    margin-left: 11vw;
+    cursor: pointer;
+
+}
+
+
+#title-video, #invertheart-video {
+    width: 100%;
+    height: auto;
+
+}
+
+#sound-toggle {
+    cursor: pointer;
+    padding: 10px;
+    height: 24px; /* Adjust size as necessary */
+    width: 24px; /* Adjust size as necessary */
+}
+
+
+/* POPUP */ 
+
+#popup-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000; /* Ensure it's on top */
+    font-size: 2vw;
+}
+
+#popup {
+    position: relative;
+    background: #16181a;
+    padding: 1.5vw 2.5vw;
+    border-radius: 20px;
+    color: #E5E5E5;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 49%;
+    opacity: 1;
+    z-index: 100;
+    font-size: 2vw;
+}
+
+#close-popup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+#close-popup svg {
+    position: relative;
+    top: 0vh;
+    left: 0.8vw;
+    fill: #E5E5E5; /* SVG color */
+}
+
+#popup p {
+    width: 50vw;
+}
+
+#popup ul {
+    list-style: none;
+    padding: 0;
+    width: 60vw;
+}
+
+#popup li {
+    margin-bottom: 10px;
+    width: 70vw;
+}
+
+
+/*------------------------------*/
+
+
+
+#canvas-container, #monitor {
+    z-index: 1; /* Higher index to keep it on top of the video */
+}
+
+
+#monitor1 {
+    background-image: url(i-mate\ PDA2k.png);
+    background-size: cover; /* Ensures the background covers the element */
+    background-position: center; /* Centers the background image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    width: 42%;
+    height: 80%;
+    padding: 20px;
+    border: none;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    transition: transform 0.5s ease-out;
+    position: absolute;
+    top: 9vh;
+    align-items: center;
+}
+
+#monitor1 .messageArea, #monitor1 .adviceArea {
+    z-index: 3;
+    color: #FF81EB;
+    font-size: 1.5vw; 
+    width: 30%;
+    text-align: left;
+    transform-origin: top center;
+    height: 17rem;
+    position: relative;
+    top: 12.5vw;
+    left: 0vw;
+    line-height: 140%;
+}
+
+#monitor1  .adviceArea {
+    color: #81BBFF;
+    transform: rotate(180deg);
+    display: none;
+    position: relative;
+    top: 50vh;
+    left: 0vw;
+    text-align: left;
+    line-height: 140%;
+}
+
+#monitor2 {
+    background-image: url(motorola.png);
+    background-size: cover; /* Ensures the background covers the element */
+    background-position: center; /* Centers the background image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    width: 40%;
+    height: 80%;
+    padding: 20px;
+    border: none;
+    z-index: 2;
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    transition: transform 0.5s ease-out;
+    position: absolute;
+    top: 8vh;
+    align-items: center;
+}
+
+#monitor2 .messageArea {
+    color: #FF81EB;
+    font-size: 1.5vw;
+    position: relative;
+    top: 12.75vw;
+    left: -1vw;
+    line-height: 140%;
+}
+
+#monitor2 .adviceArea {
+    transform: rotate(180deg);
+    display: none;
+    color: #81BBFF;
+    font-size: 1.5vw;
+    position: relative;
+    top: 27vh;
+    left: 0vw;
+    text-align: left;
+    width: 50%;
+    line-height: 140%;
+}
+
+
+#monitor3 {
+    background-image: url(nokia.png);
+    background-size: cover; /* Ensures the background covers the element */
+    background-position: center; /* Centers the background image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    width: 45%;
+    height: 90%;
+    padding: 20px;
+    border: none;
+    z-index: 2;
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    transition: transform 0.5s ease-out;
+    position: absolute;
+    top: 4vh;
+    align-items: center;
+}
+
+
+#monitor3 .messageArea {
+    color: #FF81EB;
+    font-size: 1.5vw;
+    position: relative;
+    top: 15vw;
+    left: -0.75vw;
+    line-height: 120%;
+    width: 23%;
+}
+
+#monitor3 .adviceArea {
+    transform: rotate(180deg);
+    display: none;
+    color: #81BBFF;
+    font-size: 1.5vw;
+    position: relative;
+    top: 36vh;
+    left: -0.5vw;
+    text-align: left;
+    width: 23%;
+    line-height: 120%;
+}
+
+#monitor4 {
+    background-image: url(blackberry.png);
+    background-size: cover; /* Ensures the background covers the element */
+    background-position: center; /* Centers the background image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    width: 43%;
+    height: 80%;
+    padding: 20px;
+    border: none;
+    z-index: 2;
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    transition: transform 0.5s ease-out;
+    position: absolute;
+    top: 10vh;
+    align-items: center;
+}
+
+
+#monitor4 .messageArea {
+    color: #FF81EB;
+    font-size: 1.5vw;
+    position: relative;
+    top: 9.5vw;
+    left: -0.5vw;
+    line-height: 120%;
+    width: 37%;
+}
+
+#monitor4 .adviceArea {
+    transform: rotate(180deg);
+    display: none;
+    color: #81BBFF;
+    font-size: 1.5vw;
+    position: relative;
+    top: 23vh;
+    left: -1vw;
+    text-align: left;
+    width: 37%;
+    line-height: 120%;
+}
+
+
+#Generatebutton {
+    position: absolute;
+    bottom: 2.5vw;
+    right: 4.5vw;
+    border-radius: 20px;
+    z-index: 500;
+}
+
+button {
+    font-family: 'VT323', monospace;
+    position: relative;
+    padding: 1vw 2vw;
+    font-size: 1.67vw;
+    background-color: rgba(17, 20, 23, 0.5);
+    border-radius: 16px;
+    color: #E5E5E5;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgba(229, 229, 229, 0.5);
+    color: #111417;
+}
+
+#canvas-container {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: auto; /* Allow mouse events */
+}
+
+#Switchmonitor {
+    display: none;
+}
+
+.welcome {
+    text-align: center;
+}
+
+#monitor1 .welcome {
+    position: relative;
+    top: -5vh;
+    font-size: 2.5vw;
+}
+
+#monitor2 .welcome {
+    position: relative;
+    top: -3.5vh;
+    font-size: 2vw;
+    line-height: 140%;
+}
+
+#monitor3 .welcome {
+    position: relative;
+    top: -3.5vh;
+    font-size: 2vw;
+    line-height: 100%;
+}
+
+#monitor4 .welcome {
+    position: relative;
+    top: -4.5vh;
+    font-size: 2vw;
+    line-height: 100%;
+}
+
+
+/* iPad Portrait */
+@media screen and (max-device-width: 1024px) {
+
+    #loading-video {
+        width: 120%;
+        height: auto;
+        object-fit: cover;
+        z-index: 1;
+    }
+
+    svg {
+        width: 3vw;
+        height: auto;
+      }
+
+      #sound-toggle {
+        max-width: 10vw;
+        width: auto;
+        padding: 1.5vw 3.5vw 1.5vw 1.5vw;
+        display: flex;
+        align-items: center;
+    }
+
+    #title {
+        margin: 0;
+        width: 25vw;
+
+    }
+
+    #header-container {
+        height: 8vh;
+    }
+
+    #invertheart {
+        width: 10vw;
+        height: auto;
+        object-fit: cover;
+        z-index: 3;
+        margin-right: 10vw;
+        cursor: pointer;
+    }
+
+    #invertheart-video {
+        width: 160%;
+        height: auto;
+    }
+
+
+
+    #popup {
+        position: relative;
+        background: #16181a;
+        padding: 4vw;
+        border-radius: 20px;
+        color: #E5E5E5;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 75%;
+        opacity: 1;
+        z-index: 100;
+        font-size: 3vw;
+    }
+
+    #popup p {
+        width: 75vw;
+    }
+
+    #popup li {
+        margin-bottom: 10px;
+        width: 80vw;
+    }
+
+    #popup li {
+    margin-bottom: 10px;
+    width: 80vw;
+}
+
+
+    #monitor1 {
+        width: 80%;
+    }
+
+    #monitor2 {
+        width: 80%;
+        background-size: 100%;
+    }
+
+    #monitor3 {
+        background-size: 100%;
+        width: 100%;
+        top: 1vh;
+    }
+
+    #monitor4 {
+        background-size: 100%;
+        width: 95%;
+        top: 7vh;
+    }
+
+
+    #monitor1 .messageArea, #monitor1 .adviceArea {
+        font-size: 4.5vw;
+        width: 40%;
+        position: relative;
+        top: 28vh;
+        left: 0vw;
+    }
+
+    #monitor1 .adviceArea {
+        position: relative;
+        top: 50vh;
+        left: 0vw;
+    }
+
+    #monitor1 .welcome {
+        position: relative;
+        top: -5vh;
+        font-size: 6vw;
+    }
+
+    #monitor2 .welcome {
+        position: relative;
+        top: -3.5vh;
+        font-size: 5vw;
+        line-height: 140%;
+    }
+
+    #monitor3 .welcome {
+        position: relative;
+        top: -3.5vh;
+        font-size: 5vw;
+        line-height: 100%;
+    }
+
+    #monitor4 .welcome {
+        position: relative;
+        top: -3vh;
+        font-size: 5vw;
+        line-height: 100%;
+    }
+
+    #monitor2 .messageArea, #monitor2 .adviceArea {
+        font-size: 3.5vw;
+        width: 60%;
+        position: relative;
+        top: 31vh;
+        left: -1vw;
+        line-height: 100%;
+    }
+
+    #monitor2 .adviceArea {
+        position: relative;
+        top: 33vh;
+        left: -2vw;
+    }
+
+
+    #monitor3 .messageArea, #monitor3 .adviceArea {
+        font-size: 3.5vw;
+        width: 25%;
+        position: relative;
+        top: 35vh;
+        left: -1vw;
+    }
+
+    #monitor3 .adviceArea {
+        position: relative;
+        top: 40vh;
+        left: -2vw;
+    }
+
+    #monitor4 .messageArea, #monitor4 .adviceArea {
+        font-size: 3.5vw;
+        width: 35%;
+        position: relative;
+        top: 24vh;
+        left: -1vw;
+    }
+
+
+    #monitor4 .adviceArea {
+        position: relative;
+        top: 27vh;
+        left: -2vw;
+    }
+
+    
+
+    #Switchmonitor {
+        position: absolute;
+        bottom: 4vw;
+        left: 4.5vw;
+        border-radius: 20px;
+        z-index: 500;
+        display: flex;
+    }
+
+    #Generatebutton {
+        bottom: 4vw;
+    }
+
+
+    button {
+        font-family: 'VT323', monospace;
+        position: relative;
+        padding: 1.5vw 2vw;
+        font-size: 3vw;
+        background-color: rgba(17, 20, 23, 0.5);
+        border-radius: 16px;
+        color: #E5E5E5;
+        border: none;
+        cursor: pointer;
+        width: 30vw;
+    }
+
+    #close-popup {
+        width: auto;
+    }
+
+    text {
+        text-align: center;
+    }
+
+
+
+
+}
+
+@media screen and (max-device-width: 768px) {
+
+    #loading-video {
+        width: 120%;
+        height: auto;
+        object-fit: cover;
+        z-index: 1;
+    }
+
+    svg {
+        width: 4vw;
+        height: auto;
+      }
+
+      #sound-toggle {
+        max-width: 10vw;
+        width: auto;
+        padding: 1.5vw 3.5vw 1.5vw 1.5vw;
+        display: flex;
+        align-items: center;
+        margin-left: 12vw;
+        margin-bottom: 1vw;
+    }
+
+    #title {
+        margin: 0;
+        width: 35vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 2vw;
+        margin-left: 0;
+    }
+
+    #title-video, #invertheart-video {
+        width: 150%;
+        height: auto;
+    }
+
+    #header-container {
+        height: 10vh;
+        width: 100%;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+        gap: 10vw;
+        align-items: center;
+    }
+
+    #invertheart {
+        width: 10vw;
+        height: auto;
+        object-fit: cover;
+        z-index: 3;
+        margin-right: 12vw;
+        cursor: pointer;
+    }
+
+    #invertheart-video {
+        width: 250%;
+        height: auto;
+        position: relative;
+        right: 5vw;
+    }
+
+
+
+    #popup {
+        position: relative;
+        background: #16181a;
+        padding: 5vw;
+        border-radius: 20px;
+        color: #E5E5E5;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 70%;
+        opacity: 1;
+        z-index: 100;
+        font-size: 5vw;
+        line-height: 120%;
+    }
+
+    #popup p {
+        width: 70vw;
+    }
+
+    #popup li {
+        margin-bottom: 10px;
+        width: 70vw;
+    }
+
+    #popup li {
+    margin-bottom: 10px;
+    width: 70vw;
+}
+
+
+    #monitor1 {
+        width: 90%;
+        background-size: 150%;
+        top: 5vh;
+    }
+
+    #monitor2 {
+        width: 90%;
+        background-size: 100%;
+    }
+
+    #monitor3 {
+        background-size: 110%;
+        width: 100%;
+        top: 0;
+    }
+
+    #monitor4 {
+        background-size: 120%;
+        width: 100%;
+        top: 5vh;
+    }
+
+
+   
+
+    #monitor1 .welcome {
+        position: relative;
+        top: -3vh;
+        font-size: 10vw;
+    }
+
+    #monitor2 .welcome {
+        position: relative;
+        top: -2.5vh;
+        font-size: 6vw;
+        line-height: 140%;
+    }
+
+    #monitor3 .welcome {
+        position: relative;
+        top: -1vh;
+        font-size: 6vw;
+        line-height: 100%;
+    }
+
+    #monitor4 .welcome {
+        position: relative;
+        top: 0.5vh;
+        font-size: 6vw;
+        line-height: 100%;
+        left: -1vw;
+    }
+    
+    #monitor1 .messageArea, #monitor1 .adviceArea {
+        font-size: 5.5vw;
+        width: 45%;
+        position: relative;
+        top: 28vh;
+        left: 0vw;
+    }
+
+    #monitor1 .adviceArea {
+        position: relative;
+        top: 50vh;
+        left: 0vw;
+    }
+
+    #monitor2 .messageArea, #monitor2 .adviceArea {
+        font-size: 4.5vw;
+        width: 60%;
+        position: relative;
+        top: 32.5vh;
+        left: -1vw;
+        line-height: 100%;
+    }
+
+    #monitor2 .adviceArea {
+        position: relative;
+        top: 34vh;
+        left: -2vw;
+    }
+
+
+    #monitor3 .messageArea, #monitor3 .adviceArea {
+        font-size: 4.5vw;
+        width: 23%;
+        position: relative;
+        top: 35vh;
+        left: -3vw;
+    }
+
+    #monitor3 .adviceArea {
+        position: relative;
+        top: 37vh;
+        left: -2vw;
+    }
+
+    #monitor4 .messageArea, #monitor4 .adviceArea {
+        font-size: 5.5vw;
+        width: 45%;
+        position: relative;
+        top: 26vh;
+        left: -1vw;
+    }
+
+
+    #monitor4 .adviceArea {
+        position: relative;
+        top: 27vh;
+        left: -2vw;
+    }
+
+    
+
+    #Switchmonitor {
+        position: absolute;
+        bottom: 8vw;
+        left: 4.5vw;
+        border-radius: 20px;
+        z-index: 500;
+        display: flex;
+    }
+
+    #Generatebutton {
+        bottom: 8vw;
+    }
+
+
+    button {
+        font-family: 'VT323', monospace;
+        position: relative;
+        padding: 2vw;
+        font-size: 4.5vw;
+        background-color: rgba(17, 20, 23, 0.5);
+        border-radius: 16px;
+        color: #E5E5E5;
+        border: none;
+        cursor: pointer;
+        width: 40vw;
+    }
+
+    #close-popup {
+        width: auto;
+    }
+
+    text {
+        text-align: center;
+    }
+
+
+
+
+}
+
+
+

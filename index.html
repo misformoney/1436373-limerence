@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1436373 | Limerence</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="Heartfavicon.png">
+
+</head>
+
+<body>
+
+    <audio id="click-sound" src="Mouse.mp3" preload="auto"></audio>
+    <audio id="background-music" src="Jiminell - City pop.mp3" preload="auto" autoplay loop></audio>
+
+
+
+    <div id="cover-screen">
+        <video autoplay loop muted playsinline id="loading-video">
+            <source src="Heartloading.webm" type="video/webm">
+            Your love is loading...
+        </video>
+        <div id="video-overlay"> </div>
+    </div>
+
+
+    <div id="header-container">
+
+        <div id="sound-toggle" onclick="toggleSound()">
+            <!-- Unmute SVG (Initially displayed) -->
+            <svg id="sound-on" xmlns="http://www.w3.org/2000/svg" width="20" height="22" viewBox="0 0 20 22"
+                fill="none">
+                <path d="M2.84672 6.05839L11.5328 0V21.5328L2.84672 15.4745H0V6.05839H2.84672Z" fill="#E6636F" />
+                <path
+                    d="M13.8686 3.64964V17.7994C15.9619 17.9881 20 15.7086 20 11.0675C20 5.63393 16.0143 3.80057 13.8686 3.64964Z"
+                    fill="#E6636F" />
+            </svg>
+
+            </svg>
+
+            <!-- Muted SVG (Initially hidden) -->
+            <svg id="sound-off" xmlns="http://www.w3.org/2000/svg" width="28" height="22" viewBox="0 0 28 22"
+                fill="none" style="display: none;">
+                <path d="M5.40831 5.98511L13.9894 0V21.2724L5.40831 15.2873H2.59603V5.98511H5.40831Z" fill="#E7636F" />
+                <path
+                    d="M16.2969 3.60549V17.5841C18.3649 17.7705 22.3541 15.5186 22.3541 10.9336C22.3541 5.56578 18.4166 3.75459 16.2969 3.60549Z"
+                    fill="#E7636F" />
+                <path d="M28 1.89505L26.7294 0.144219L0 19.5419L1.27059 21.2928L28 1.89505Z" fill="#E7636F" />
+            </svg>
+        </div>
+
+
+        <div id="title">
+            <video autoplay loop muted playsinline id="title-video">
+                <source src="1436373.webm" type="video/webm">
+                1436373 / Limerence
+        </div>
+
+        <div id="invertheart">
+            <video autoplay loop muted playsinline id="invertheart-video">
+                <source src="heartmini.webm" type="video/webm">
+                Invert heart
+            </video>
+        </div>
+
+    </div>
+
+ <div id="popup-container" style="display: none;">
+            <div id="popup">
+                <button id="close-popup">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect y="29.3118" width="41.453" height="3.80183" rx="1.90091" transform="rotate(-45 0 29.3118)"
+                            fill="#E5E5E5" />
+                        <rect width="41.453" height="3.80183" rx="1.90091"
+                            transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 32 29.3118)" fill="#E5E5E5" />
+                    </svg>
+                </button>
+                <p>“1436373” is a code-based expressive interactive game.</p>
+                <p>Inspired by the pager devices in the late 90s and 2000s, this game will predict the message for your
+                    limerence “love”.</p>
+                <br>
+                <ul>
+                    <li>• Click the button to generate messages.</li>
+                    <li>• Click <img src="Heartfavicon.png" alt="Flip"
+                            style="width: 35px; height: auto; vertical-align: middle;"> to flip the device and reveal
+                        the advice.</li>
+                    <li>• Double click to change the background pattern.</li>
+                    <li>• Press “space” to switch between the devices.</li>
+                </ul>
+            </div>
+        </div>
+
+    <div id="canvas-container">
+        <canvas id="scene"></canvas>
+    </div>
+
+
+    <div id="monitor1">
+        <div class="messageArea">
+            <p class="welcome"> Welcome to <br> <br>1436373 <br> -  <br>  Limerence </p>
+        </div>
+        <div class="adviceArea"></div>
+    </div>
+
+    <div id="monitor2">
+        <div class="messageArea">
+            <p class="welcome">Welcome to<br> 1436373 | Limerence </p>
+        </div>
+        <div class="adviceArea"></div>
+    </div>
+
+    <div id="monitor3">
+        <div class="messageArea">
+            <p class="welcome"> Welcome to <br> <br>1436373 <br> -  <br>  Limerence  </p>
+        </div>
+        <div class="adviceArea"></div>
+    </div>
+
+    <div id="monitor4">
+        <div class="messageArea">
+            <p class="welcome"> Welcome to <br> <br>1436373  - <br> Limerence </p>
+        </div>
+        <div class="adviceArea"></div>
+    </div>
+
+    <div id="Generatebutton">
+        <button onclick="generatePagerMessage()">Generate Pager Code</button>
+    </div>
+
+    <div id="Switchmonitor">
+        <button onclick="switchMonitor()">Switch device</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+    <script src="sketch.js"></script>
+
+    <script>
+
+        // Add sound effect on clicks, keypresses, and touch events
+        function playSound() {
+            var sound = document.getElementById('click-sound');
+            if (soundEnabled) {
+                sound.play();
+            }
+        }
+
+        // Event listeners for clicks, keypresses, and touch movements
+        document.body.addEventListener('click', playSound);
+        document.body.addEventListener('keydown', playSound);
+        document.body.addEventListener('touchmove', playSound);
+
+
+        //SOUND ON-OFF 
+        var soundEnabled = true;
+
+        // Function to toggle sound and switch icons
+        function toggleSound() {
+            var sound = document.getElementById('click-sound');
+            var music = document.getElementById('background-music');
+            var soundOnIcon = document.getElementById('sound-on');
+            var soundOffIcon = document.getElementById('sound-off');
+
+            soundEnabled = !soundEnabled;
+            sound.muted = !soundEnabled; // Mute or unmute the sound effect
+            music.muted = !soundEnabled; // Mute or unmute the background music
+
+            // Toggle between sound on/off icons
+            if (soundEnabled) {
+                soundOnIcon.style.display = 'inline';
+                soundOffIcon.style.display = 'none';
+            } else {
+                soundOnIcon.style.display = 'none';
+                soundOffIcon.style.display = 'inline';
+            }
+        }
+
+
+        //--------------------cover-screen loading
+
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            setTimeout(function () {
+                document.getElementById("cover-screen").style.display = "none";
+            }, 2200); // 2000 milliseconds = 2 seconds
+        }); 
+
+
+        //----------------------------------MONITOR TRIGGER
+
+        let currentMonitorIndex = 1; // Start with monitor1
+
+        // Array of monitor ids for easier switching
+        const monitors = ['monitor1', 'monitor2', 'monitor3', 'monitor4'];
+
+        // Function to hide all monitors
+        function hideAllMonitors() {
+            monitors.forEach(monitorId => {
+                document.getElementById(monitorId).style.display = 'none';
+            });
+        }
+
+        // Function to show the current monitor
+        function showCurrentMonitor() {
+            document.getElementById(monitors[currentMonitorIndex - 1]).style.display = 'flex';
+        }
+
+        // Initialize by showing the first monitor
+        hideAllMonitors();
+        showCurrentMonitor();
+
+        // Function to switch the monitor (same as the spacebar logic)
+        function switchMonitor() {
+            // Hide the current monitor
+            hideAllMonitors();
+
+            // Update the monitor index (cycle through 1 to 4)
+            currentMonitorIndex = (currentMonitorIndex % 4) + 1;
+
+            // Show the new current monitor
+            showCurrentMonitor();
+        }
+
+        // Event listener for the spacebar press (desktop)
+        document.addEventListener('keydown', function (event) {
+            if (event.key === ' ') {
+                switchMonitor(); // Call the same function as the button when space is pressed
+            }
+        });
+
+        //pop-up trigger
+
+        document.getElementById('title').addEventListener('click', function () {
+            document.getElementById('popup-container').style.display = 'flex';
+        });
+
+        document.getElementById('close-popup').addEventListener('click', function () {
+            document.getElementById('popup-container').style.display = 'none';
+        });
+
+
+
+
+let currentRotation = 0; // Track the current rotation angle
+
+// Rotate and invert function
+function rotateAndInvert() {
+    currentRotation = (currentRotation + 180) % 360;
+
+    // Rotate all monitors and toggle between messageArea and adviceArea
+    monitors.forEach(monitorId => {
+        const monitor = document.getElementById(monitorId);
+        monitor.style.transform = `rotate(${currentRotation}deg)`;
+
+        const messageArea = monitor.querySelector('.messageArea');
+        const adviceArea = monitor.querySelector('.adviceArea');
+
+        // Toggle between messageArea and adviceArea based on rotation
+        if (currentRotation === 180) {
+            messageArea.style.display = 'none';
+            adviceArea.style.display = 'block';
+        } else {
+            messageArea.style.display = 'block';
+            adviceArea.style.display = 'none';
+        }
+    });
+
+    // Invert the entire page, excluding monitors
+    if (currentRotation === 180) {
+        document.body.classList.add('inverted');
+    } else {
+        document.body.classList.remove('inverted');
+    }
+}
+
+// Add click event to the invertheart element to trigger rotation and inversion
+document.getElementById('invertheart').addEventListener('click', rotateAndInvert);
+
+
+
+    </script>
+
+</body>
+
+</html>
