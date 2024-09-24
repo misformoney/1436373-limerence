@@ -832,13 +832,13 @@ button:hover {
     #monitor3 .welcome {
         position: relative;
         top: -1vh;
-        font-size: 6vw;
+        font-size: 5.25vw;
         line-height: 100%;
     }
 
     #monitor4 .welcome {
         position: relative;
-        top: 0.5vh;
+        top: -1vh;
         font-size: 6vw;
         line-height: 100%;
         left: -1vw;
