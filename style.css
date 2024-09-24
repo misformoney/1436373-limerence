@@ -461,7 +461,7 @@ button:hover {
 
 #monitor4 .welcome {
     position: relative;
-    top: 20px;
+    top: 0px;
     font-size: 2vw;
     line-height: 100%;
 }
