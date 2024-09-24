@@ -215,8 +215,8 @@ function displayGridPattern() {
     gapY = 20; // Smaller gap for mobile
     charWidth = textWidth('W'); // Adjust based on smaller font-size
   } else {
-    textSize(120); // Larger text size for desktop
-    gapY = 80; // Larger gap for desktop
+    textSize(100); // Larger text size for desktop
+    gapY = 60; // Larger gap for desktop
     charWidth = textWidth('W'); // Adjust based on larger font-size
   }
 
